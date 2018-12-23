@@ -10,7 +10,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Dashboard</title>
+<link rel="icon" href="/resources/custom/img/fish.png"/>
+
+<title>Meehan Aquarium</title>
 
 <!-- Bootstrap core CSS-->
 <link href="/resources/sbadmin/vendor/bootstrap/css/bootstrap.min.css"
@@ -43,7 +45,7 @@
 
 				<!-- Icon Cards-->
 				<div class="row">
-					<div class="col-xl-3 col-sm-6 mb-3">
+					<div class="col-xl-5 col-sm-6 mb-3">
 						<div class="card text-white bg-primary o-hidden h-100">
 							<div class="card-body">
 								<div class="card-body-icon">
@@ -51,22 +53,22 @@
 								</div>
 
 								<div class="row">
-									<div class="col-8">
-										<div class="mr-5" style="min-height: 30px;">Current
+									<div class="col-7">
+										<div style="min-height: 30px;">Current
 											Temperature:</div>
 									</div>
-									<div class="col-4">
+									<div class="col-5">
 										<div id="s0001-value" class="mr-5" ></div>
 									</div>
 								</div>
 							</div>
 							<div class="card-footer small text-white clearfix z-1"> 
 							<div class="row">
-									<div class="col-6">
-										<div class="mr-5" style="min-height: 30px;">Last Updated:</div>
+									<div class="col-5">
+										<div style="min-height: 30px;">Last Updated:</div>
 									</div>
-									<div class="col-6">
-										<div id="s0001-measureDate" class="mr-5" ></div>
+									<div class="col-7">
+										<div id="s0001-measureDate" ></div>
 									</div>
 								</div>
 							</div>
@@ -188,7 +190,7 @@
 				var fuzzy;
 
 				if (delta < 30) {
-				    fuzzy = 'just then.';
+				    fuzzy = 'just now.';
 				} else if (delta < minute) {
 				    fuzzy = delta + ' seconds ago.';
 				} else if (delta < 2 * minute) {
