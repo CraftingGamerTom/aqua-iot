@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>SB Admin - Dashboard</title>
+
+<!-- Bootstrap core CSS-->
+<link href="/resources/sbadmin/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Custom fonts for this template-->
+<link href="/resources/sbadmin/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+
+<!-- Page level plugin CSS-->
+<link
+	href="/resources/sbadmin/vendor/datatables/dataTables.bootstrap4.css"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/resources/sbadmin/css/sb-admin.css" rel="stylesheet">
+
+<!-- Spinner -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
+
+</head>
+
+<body id="page-top">
+
+	<div id="wrapper">
+
+		<div id="content-wrapper">
+
+			<div class="container-fluid">
+
+				<!-- Icon Cards-->
+				<div class="row">
+					<div class="col-xl-3 col-sm-6 mb-3">
+						<div class="card text-white bg-primary o-hidden h-100">
+							<div class="card-body">
+								<div class="card-body-icon">
+									<i class="fas fa-fw fa-thermometer-three-quarters"></i>
+								</div>
+
+								<div class="row">
+									<div class="col-8">
+										<div class="mr-5" style="min-height: 30px;">Current
+											Temperature:</div>
+									</div>
+									<div class="col-4">
+										<div id="s0001-value" class="mr-5" ></div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer small text-white clearfix z-1"> 
+							<div class="row">
+									<div class="col-6">
+										<div class="mr-5" style="min-height: 30px;">Last Updated:</div>
+									</div>
+									<div class="col-6">
+										<div id="s0001-measureDate" class="mr-5" ></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Area Chart Example-->
+<!-- 				<div class="card mb-3">
+					<div class="card-header">
+						<i class="fas fa-chart-area"></i> Area Chart Example
+					</div>
+					<div class="card-body">
+						<canvas id="myAreaChart" width="100%" height="30"></canvas>
+					</div>
+					<div class="card-footer small text-muted">Updated yesterday
+						at 11:59 PM</div>
+				</div>
+ -->
+			</div>
+			<!-- /.content-wrapper -->
+
+		</div>
+		<!-- /#wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
+
+		<!-- Logout Modal-->
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to
+							Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are
+						ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button"
+							data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="/resources/sbadmin/login.html">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="/resources/sbadmin/vendor/jquery/jquery.min.js"></script>
+		<script
+			src="/resources/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script
+			src="/resources/sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Page level plugin JavaScript-->
+		<script src="/resources/sbadmin/vendor/chart.js/Chart.min.js"></script>
+		<script
+			src="/resources/sbadmin/vendor/datatables/jquery.dataTables.js"></script>
+		<script
+			src="/resources/sbadmin/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="/resources/sbadmin/js/sb-admin.min.js"></script>
+
+		<!-- Demo scripts for this page-->
+		<script src="/resources/sbadmin/js/demo/datatables-demo.js"></script>
+		<script src="/resources/sbadmin/js/demo/chart-area-demo.js"></script>
+</body>
+
+<script>
+	var opts = {
+		lines : 10, // The number of lines to draw
+		length : 7, // The length of each line
+		width : 4, // The line thickness
+		radius : 10, // The radius of the inner circle
+		corners : 1, // Corner roundness (0..1)
+		rotate : 0, // The rotation offset
+		color : '#000', // #rgb or #rrggbb
+		speed : 1, // Rounds per second
+		trail : 60, // Afterglow percentage
+		shadow : false, // Whether to render a shadow
+		hwaccel : false, // Whether to use hardware acceleration
+		className : 'spinner', // The CSS class to assign to the spinner
+		zIndex : 2e9, // The z-index (defaults to 2000000000)
+		top : 0, // Top position relative to parent in px
+		left : 0
+	// Left position relative to parent in px
+	};
+	var target = document.getElementById('s0001');
+	var spinner = new Spinner(opts).spin(target);
+</script>
+
+<script>
+	window.onload = function refreshData() {
+		console.log("HIT");
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var liveData = JSON.parse(this.responseText);
+
+				// Make a fuzzy time
+				var delta = Math.round((+new Date - Date.parse(liveData.measureDate)) / 1000);
+
+				var minute = 60,
+				    hour = minute * 60,
+				    day = hour * 24,
+				    week = day * 7;
+
+				var fuzzy;
+
+				if (delta < 30) {
+				    fuzzy = 'just then.';
+				} else if (delta < minute) {
+				    fuzzy = delta + ' seconds ago.';
+				} else if (delta < 2 * minute) {
+				    fuzzy = 'a minute ago.'
+				} else if (delta < hour) {
+				    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+				} else if (Math.floor(delta / hour) == 1) {
+				    fuzzy = '1 hour ago.'
+				} else if (delta < day) {
+				    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+				} else if (delta < day * 2) {
+				    fuzzy = 'yesterday';
+				}
+				console.log(fuzzy);
+				
+				
+				
+				console.log(liveData);
+				document.getElementById("s0001-value").innerHTML = liveData.value;
+				document.getElementById("s0001-measureDate").innerHTML = fuzzy;
+			}
+		};
+		xhttp.open("GET", "/api/v1/sensors/0001/data/live", true);
+		xhttp.send();
+		
+		setTimeout(refreshData, 10000);
+	}
+</script>
+
+</html>

@@ -1,0 +1,23 @@
+server:
+  port: 8080
+mvc:
+  static-path-pattern: "/src/main/webapp/**"
+api:
+  hostname: "https://aqua.thomasrokicki.com"
+  version: "@craftinggamertom.version@"
+craftinggamertom:
+  common:
+    http:
+      name: "@craftinggamertom.name@"
+      version: "@craftinggamertom.version@"
+      environment: "@craftinggamertom.service.environment@"
+      hostname: https://aqua.thomasrokicki.com
+    database:
+      mongodb:
+        username: "@craftinggamertom.database.username@"
+        password: "@craftinggamertom.database.password@"
+        address: "@craftinggamertom.database.address@"
+        port: "@craftinggamertom.database.port@"
+        databaseName: "@craftinggamertom.database.name@"
+        authSource: "@craftinggamertom.database.authSource@"
+  
